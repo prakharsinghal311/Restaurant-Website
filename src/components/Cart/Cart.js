@@ -6,15 +6,17 @@ import CartItem from "./CartItem";
 
 const Cart = (props) => {
   const cartcntx = useContext(CartCntx);
-  let totalAmount = 0;
 
-  cartcntx.items.map(
-    (item) => (totalAmount += Number(item.price) * Number(item.quantity))
-  );
+  const cartItemRemoveHandler = (id) => {
+    cartcntx.removeItem(id);
+  };
 
-  const cartItemRemoveHandler = (id) => {};
+  const cartItemAddHandler = (item) => {
+    cartcntx.addItem({ ...item, quantity: 1 });
+    cartcntx.calculateTotal();
+  };
 
-  const cartItemAddHandler = (item) => {};
+  cartcntx.calculateTotal();
 
   const cartItems = (
     <ul className={classes["cart-items"]}>
@@ -36,7 +38,7 @@ const Cart = (props) => {
       {cartItems}
       <div className={classes.total}>
         <span>Total Amount</span>
-        <span>{totalAmount.toFixed(2)}</span>
+        <span>{cartcntx.totalAmount.toFixed(2)}</span>
       </div>
       <div className={classes.actions}>
         <button className={classes["button--alt"]} onClick={props.onClose}>

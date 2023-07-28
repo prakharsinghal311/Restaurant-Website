@@ -9,6 +9,7 @@ const Cart = (props) => {
 
   const cartItemRemoveHandler = (id) => {
     cartcntx.removeItem(id);
+    cartcntx.calculateTotal();
   };
 
   const cartItemAddHandler = (item) => {
